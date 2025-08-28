@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>七夕快乐，小阿晴！</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #2c003e, #0f084b);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* 星空背景效果 */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: twinkle 5s infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 900px;
+            text-align: center;
+            padding: 30px 20px;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
+            color: #ff69b4;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: #f8d7da;
+        }
+        
+        .slider-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .slide {
+            min-width: 100%;
+            position: relative;
+        }
+        
+        .slide img {
+            width: 100%;
+            display: block;
+            border-radius: 15px;
+            height: 400px;
+            object-fit: cover;
+        }
+        
+        .slide-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+        }
+        
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 105, 180, 0.7);
+            border: none;
+            color: white;
+            font-size: 24px;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background 0.3s;
+            z-index: 10;
+        }
+        
+        .nav-button:hover {
+            background: rgba(255, 105, 180, 1);
+        }
+        
+        .prev {
+            left: 10px;
+        }
+        
+        .next {
+            right: 10px;
+        }
+        
+        .quotes-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .quote {
+            font-size: 1.4rem;
+            font-style: italic;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #ffd6ff;
+        }
+        
+        .author {
+            text-align: right;
+            font-size: 1.1rem;
+            color: #ff69b4;
+        }
+        
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0;
+            animation: fall 10s linear infinite, fade 10s linear infinite;
+            color: #ff69b4;
+        }
+        
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); }
+            100% { transform: translateY(110vh) rotate(360deg); }
+        }
+        
+        @keyframes fade {
+            0%, 100% { opacity: 0; }
+            10%, 90% { opacity: 1; }
+        }
+        
+        /* 控制面板样式 */
+        .control-panel {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .control-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .control-label {
+            font-size: 1.1rem;
+            color: #ffd6ff;
+        }
+        
+        .interval-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .interval-slider {
+            width: 200px;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            outline: none;
+        }
+        
+        .interval-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #ff69b4;
+            cursor: pointer;
+        }
+        
+        .interval-value {
+            min-width: 40px;
+            text-align: center;
+            font-weight: bold;
+            color: #ff69b4;
+        }
+        
+        .control-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .control-btn {
+            padding: 10px 20px;
+            background: rgba(255, 105, 180, 0.7);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .control-btn:hover {
+            background: rgba(255, 105, 180, 1);
+            transform: translateY(-2px);
+        }
+        
+        /* 音乐播放器样式 */
+        .music-player {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+        }
+        
+        .music-title {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #ffd6ff;
+        }
+        
+        .music-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .music-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 105, 180, 0.7);
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .music-btn:hover {
+            background: rgba(255, 105, 180, 1);
+            transform: scale(1.1);
+        }
+        
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .volume-slider {
+            width: 80px;
+            height: 6px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            outline: none;
+        }
+        
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #ff69b4;
+            cursor: pointer;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #c9b4de;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .quote { font-size: 1.2rem; }
+            .slide img { height: 300px; }
+            .control-group { flex-direction: column; }
+            .control-buttons { flex-direction: column; }
+        }
+        
+        @media (max-width: 480px) {
+            h1 { font-size: 1.8rem; }
+            .subtitle { font-size: 1rem; }
+            .quote { font-size: 1.1rem; }
+            .slide img { height: 250px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- 星空背景 -->
+    <div class="stars" id="stars"></div>
+    
+    <!-- 飘落的心形 -->
+    <div class="hearts" id="hearts"></div>
+    
+    <div class="container">
+        <h1>❤️ 七夕快乐，我的小阿晴 ❤️</h1>
+        <p class="subtitle">每一张照片都是我们爱的见证，每一句话都是我真心的告白</p>
+        
+        <!-- 照片轮播区域 -->
+        <div class="slider-container">
+            <div class="slider" id="slider">
+                <!-- 幻灯片将由JavaScript动态生成 -->
+            </div>
+            <button class="nav-button prev" id="prev">❮</button>
+            <button class="nav-button next" id="next">❯</button>
+        </div>
+        
+        <!-- 控制面板 -->
+        <div class="control-panel">
+            <!-- <div class="control-group">
+                <span class="control-label">自动轮播速度:</span>
+                <div class="interval-control">
+                    <span>慢</span>
+                    <input type="range" min="2" max="10" value="4" class="interval-slider" id="intervalSlider">
+                    <span>快</span>
+                    <span class="interval-value" id="intervalValue">4秒</span>
+                </div>
+            </div>
+			-->
+            <div class="control-buttons">
+                <button class="control-btn" id="playBtn">暂停自动播放</button>
+                <button class="control-btn" id="prevBtn">上一张</button>
+                <button class="control-btn" id="nextBtn">下一张</button>
+            </div>
+            
+            <!-- 音乐播放器 -->
+            <div class="music-player">
+                <div class="music-title" id="musicTitle">背景音乐: 爱的罗曼史 - Richard Clayderman</div>
+                <div class="music-controls">
+                    <button class="music-btn" id="playPauseBtn">▶</button>
+                    <button class="music-btn" id="nextMusicBtn">↻</button>
+                    <div class="volume-control">
+                        <span>🔈</span>
+                        <input type="range" min="0" max="1" step="0.1" value="0.7" class="volume-slider" id="volumeSlider">
+                        <span>🔊</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 情话语录区域 -->
+        <div class="quotes-container">
+            <div class="quote" id="quote">情话加载中...</div>
+            <div class="author" id="author">—— 爱你的我</div>
+        </div>
+        
+        <div class="footer">
+            <p>专为你而制作 · 七夕快乐 · 永远爱你</p>
+        </div>
+    </div>
+
+    <!-- 音频元素 -->
+    <audio id="backgroundMusic" loop>
+        <source src="https://music.163.com/song/media/outer/url?id=25788001.mp3" type="audio/mp3">
+        您的浏览器不支持音频元素。
+    </audio>
+
+    <script>
+        // 照片数据 - 替换为实际的照片URL和描述
+        const photos = [
+            {
+                url: "https://pic1.imgdb.cn/item/68b0831858cb8da5c85d0423.jpg", // 替换为实际照片URL
+                caption: "这是我们第一次相遇的地方，你的笑容让我心动不已"
+            },
+            {
+                url: "https://pic1.imgdb.cn/item/68b0831858cb8da5c85d0422.jpg", // 替换为实际照片URL
+                caption: "记得那次旅行吗？每一刻都让我更加爱你"
+            },
+            {
+                url: "https://pic1.imgdb.cn/item/68b0831858cb8da5c85d0424.jpg", // 替换为实际照片URL
+                caption: "你总是能让我笑，让我的世界充满阳光"
+            },
+            {
+                url: "https://pic1.imgdb.cn/item/68b0831958cb8da5c85d0425.jpg", // 替换为实际照片URL
+                caption: "未来的路还很长，我想和你一起走下去"
+            },
+			{
+                url: "https://pic1.imgdb.cn/item/68b0831858cb8da5c85d0421.jpg", // 替换为实际照片URL
+                caption: "你总是能让我笑，让我的世界充满阳光"
+            },
+        ];
+        
+        // 情话数据
+        const loveQuotes = [
+            "遇见你，是我一生中最美好的意外",
+            "我想把全世界的温柔都给你，因为你值得",
+            "每一天醒来，第一个想到的人就是你",
+            "你的名字，是我读过最短的情诗",
+            "我喜欢你，像风走了八千里，不问归期",
+            "你是我的今天和所有的明天",
+            "对于世界，你可能只是一个人，但对于我，你却是整个世界",
+            "我想和你一起慢慢变老，直到老得哪儿也去不了，我依然会把你当成手心里的宝",
+            "自从遇见你，我的人生便只剩下了四季：春夏秋冬和你",
+            "我不善于旅行，但你就是我的整个世界，无需远行"
+        ];
+        
+        // 音乐数据
+        const musicList = [
+            //{
+              //  title: "梦中的婚礼 - Richard Clayderman",
+                //url: "https://music.163.com/song/mehttps://music.163.com/#/song?id=2049441315dia/outer/url?id=25788001.mp3"
+            //},
+            {
+                title: "爱的罗曼史 - 古典吉他",
+                url: "https://music.163.com/song/media/outer/url?id=22618407.mp3"
+            },
+            {
+                title: "Canon in D - Johann Pachelbel",
+                url: "https://music.163.com/song/media/outer/url?id=22707008.mp3"
+            }
+        ];
+        
+        // 全局变量
+        let currentSlide = 0;
+        let autoPlayInterval;
+        let isAutoPlay = true;
+        let intervalTime = 5000; // 默认4秒
+        let currentMusicIndex = 0;
+        let isMusicPlaying = false;
+        
+        // 初始化函数
+        function init() {
+            createStars();
+            createHearts();
+            initSlider();
+            initControls();
+            initMusicPlayer();
+            showRandomQuote();
+            startAutoPlay();
+            setInterval(showRandomQuote, 5000); // 每5秒更换一次情话
+        }
+        
+        // 创建星空背景
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starsCount = 200;
+            
+            for (let i = 0; i < starsCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // 随机大小和位置
+                const size = Math.random() * 3;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                
+                // 随机动画延迟
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // 创建飘落的心形
+        function createHearts() {
+            const heartsContainer = document.getElementById('hearts');
+            const heartsCount = 30;
+            
+            for (let i = 0; i < heartsCount; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '❤';
+                
+                // 随机大小、位置和延迟
+                const size = Math.random() * 20 + 10;
+                heart.style.fontSize = `${size}px`;
+                heart.style.left = `${Math.random() * 100}%`;
+                heart.style.animationDelay = `${Math.random() * 10}s`;
+                
+                heartsContainer.appendChild(heart);
+            }
+        }
+        
+        // 初始化轮播图
+        function initSlider() {
+            const slider = document.getElementById('slider');
+            
+            // 动态生成幻灯片
+            photos.forEach(photo => {
+                const slide = document.createElement('div');
+                slide.classList.add('slide');
+                
+                const img = document.createElement('img');
+                img.src = photo.url;
+                img.alt = "我们的照片";
+                
+                const caption = document.createElement('div');
+                caption.classList.add('slide-caption');
+                caption.textContent = photo.caption;
+                
+                slide.appendChild(img);
+                slide.appendChild(caption);
+                slider.appendChild(slide);
+            });
+            
+            // 设置导航按钮事件
+            document.getElementById('prev').addEventListener('click', prevSlide);
+            document.getElementById('next').addEventListener('click', nextSlide);
+            
+            // 初始显示第一张照片
+            updateSlider();
+        }
+        
+        // 初始化控制面板
+        function initControls() {
+            const intervalSlider = document.getElementById('intervalSlider');
+            const intervalValue = document.getElementById('intervalValue');
+            const playBtn = document.getElementById('playBtn');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            // 设置滑块事件
+            intervalSlider.addEventListener('input', function() {
+                intervalTime = this.value * 1000;
+                intervalValue.textContent = `${this.value}秒`;
+                
+                // 如果正在自动播放，重新启动以应用新的时间间隔
+                if (isAutoPlay) {
+                    stopAutoPlay();
+                    startAutoPlay();
+                }
+            });
+            
+            // 设置播放/暂停按钮事件
+            playBtn.addEventListener('click', toggleAutoPlay);
+            
+            // 设置控制按钮事件
+            prevBtn.addEventListener('click', prevSlide);
+            nextBtn.addEventListener('click', nextSlide);
+        }
+        
+        // 初始化音乐播放器
+        function initMusicPlayer() {
+            const audio = document.getElementById('backgroundMusic');
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const nextMusicBtn = document.getElementById('nextMusicBtn');
+            const volumeSlider = document.getElementById('volumeSlider');
+            const musicTitle = document.getElementById('musicTitle');
+            
+            // 设置初始音乐
+            loadMusic(currentMusicIndex);
+            
+            // 播放/暂停按钮事件
+            playPauseBtn.addEventListener('click', function() {
+                if (isMusicPlaying) {
+                    audio.pause();
+                    playPauseBtn.textContent = '▶';
+                } else {
+                    audio.play().catch(e => {
+                        console.log("自动播放被阻止，请手动点击播放: ", e);
+                    });
+                    playPauseBtn.textContent = '⏸';
+                }
+                isMusicPlaying = !isMusicPlaying;
+            });
+            
+            // 下一首按钮事件
+            nextMusicBtn.addEventListener('click', function() {
+                currentMusicIndex = (currentMusicIndex + 1) % musicList.length;
+                loadMusic(currentMusicIndex);
+                if (isMusicPlaying) {
+                    audio.play();
+                }
+            });
+            
+            // 音量控制事件
+            volumeSlider.addEventListener('input', function() {
+                audio.volume = this.value;
+            });
+            
+            // 音乐结束时自动播放下一首
+            audio.addEventListener('ended', function() {
+                currentMusicIndex = (currentMusicIndex + 1) % musicList.length;
+                loadMusic(currentMusicIndex);
+                audio.play();
+            });
+        }
+        
+        // 加载音乐
+        function loadMusic(index) {
+            const audio = document.getElementById('backgroundMusic');
+            const musicTitle = document.getElementById('musicTitle');
+            
+            audio.src = musicList[index].url;
+            musicTitle.textContent = `背景音乐: ${musicList[index].title}`;
+        }
+        
+        // 切换到下一张照片
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % photos.length;
+            updateSlider();
+        }
+        
+        // 切换到上一张照片
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + photos.length) % photos.length;
+            updateSlider();
+        }
+        
+        // 更新轮播图显示
+        function updateSlider() {
+            const slider = document.getElementById('slider');
+            slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+        
+        // 开始自动播放
+        function startAutoPlay() {
+            stopAutoPlay(); // 确保没有其他定时器在运行
+            autoPlayInterval = setInterval(nextSlide, intervalTime);
+            isAutoPlay = true;
+            document.getElementById('playBtn').textContent = '暂停自动播放';
+        }
+        
+        // 停止自动播放
+        function stopAutoPlay() {
+            clearInterval(autoPlayInterval);
+            isAutoPlay = false;
+            document.getElementById('playBtn').textContent = '开始自动播放';
+        }
+        
+        // 切换自动播放状态
+        function toggleAutoPlay() {
+            if (isAutoPlay) {
+                stopAutoPlay();
+            } else {
+                startAutoPlay();
+            }
+        }
+        
+        // 显示随机情话
+        function showRandomQuote() {
+            const randomIndex = Math.floor(Math.random() * loveQuotes.length);
+            document.getElementById('quote').textContent = loveQuotes[randomIndex];
+        }
+        
+        // 页面加载完成后初始化
+        window.addEventListener('load', init);
+    </script>
+</body>
+</html>
