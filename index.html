@@ -376,7 +376,8 @@
         
         <!-- 控制面板 -->
         <div class="control-panel">
-            <!-- <div class="control-group">
+            
+            <div class="control-group">
                 <span class="control-label">自动轮播速度:</span>
                 <div class="interval-control">
                     <span>慢</span>
@@ -385,17 +386,29 @@
                     <span class="interval-value" id="intervalValue">4秒</span>
                 </div>
             </div>
-			-->
+			
             <div class="control-buttons">
                 <button class="control-btn" id="playBtn">暂停自动播放</button>
                 <button class="control-btn" id="prevBtn">上一张</button>
                 <button class="control-btn" id="nextBtn">下一张</button>
             </div>
             
+
             <!-- 音乐播放器 -->
             <div class="music-player">
-                <div class="music-title" id="musicTitle">背景音乐: 爱的罗曼史 - Richard Clayderman</div>
-                <div class="music-controls">
+                <!--APlayer-->
+                <script src="https://cdn.jsdelivr.net/npm/vconsole/dist/vconsole.min.js"></script>
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+                <script src="https://cdn.jsdelivr.net/npm/hls.js/dist/hls.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/color-thief-don@2.0.2/src/color-thief.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
+                <!-- 这里的id是换歌单的。 type可以选择其它类型，详见https://github.com/metowolf/MetingJS -->
+                <!-- <meting-js server="netease" type="playlist" id="167985096" fixed="true" autoplay="true"></meting-js> -->
+                <meting-js server="netease" type="playlist" id="9209248221" fixed="true" autoplay="true"></meting-js>
+
+                <!-- <div class="music-title" id="musicTitle">背景音乐: Canon in D - Johann Pachelbel</div> -->
+                <!-- <div class="music-controls">
                     <button class="music-btn" id="playPauseBtn">▶</button>
                     <button class="music-btn" id="nextMusicBtn">↻</button>
                     <div class="volume-control">
@@ -403,13 +416,14 @@
                         <input type="range" min="0" max="1" step="0.1" value="0.7" class="volume-slider" id="volumeSlider">
                         <span>🔊</span>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
         
         <!-- 情话语录区域 -->
         <div class="quotes-container">
             <div class="quote" id="quote">情话加载中...</div>
+            <div class="quote" id="quote">爱你，今天明天每一天！</div>
             <div class="author" id="author">—— 爱你的我</div>
         </div>
         
@@ -423,6 +437,7 @@
         <source src="https://music.163.com/song/media/outer/url?id=25788001.mp3" type="audio/mp3">
         您的浏览器不支持音频元素。
     </audio>
+
 
     <script>
         // 照片数据 - 替换为实际的照片URL和描述
@@ -467,7 +482,7 @@
         const musicList = [
             //{
               //  title: "梦中的婚礼 - Richard Clayderman",
-                //url: "https://music.163.com/song/mehttps://music.163.com/#/song?id=2049441315dia/outer/url?id=25788001.mp3"
+                //url: "https://music.163.com/song/media/outer/url?id=25788001.mp3"
             //},
             {
                 title: "爱的罗曼史 - 古典吉他",
