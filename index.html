@@ -381,7 +381,7 @@
                 <span class="control-label">自动轮播速度:</span>
                 <div class="interval-control">
                     <span>慢</span>
-                    <input type="range" min="2" max="10" value="4" class="interval-slider" id="intervalSlider">
+                    <input type="range" min="2" max="6" value="3" class="interval-slider" id="intervalSlider">
                     <span>快</span>
                     <span class="interval-value" id="intervalValue">4秒</span>
                 </div>
@@ -422,7 +422,7 @@
         
         <!-- 情话语录区域 -->
         <div class="quotes-container">
-            <div class="quote" id="quote">情话加载中...</div>
+            <!-- <div class="quote" id="quote">情话加载中...</div> -->
             <div class="quote" id="quote">爱你，今天明天每一天！</div>
             <div class="author" id="author">—— 爱你的我</div>
         </div>
@@ -444,7 +444,7 @@
         const photos = [
             {
                 url: "https://pic1.imgdb.cn/item/68b0831858cb8da5c85d0423.jpg", // 替换为实际照片URL
-                caption: "这是我们第一次相遇的地方，你的笑容让我心动不已"
+                caption: "遇见你，是我一生中最美好的意外"
             },
             {
                 url: "https://pic1.imgdb.cn/item/68b0831858cb8da5c85d0422.jpg", // 替换为实际照片URL
@@ -460,8 +460,40 @@
             },
 			{
                 url: "https://pic1.imgdb.cn/item/68b0831858cb8da5c85d0421.jpg", // 替换为实际照片URL
-                caption: "你总是能让我笑，让我的世界充满阳光"
+                caption: "我想把全世界的温柔都给你，因为你值"
             },
+            {
+                url: "https://pic1.imgdb.cn/item/68b17cdd58cb8da5c86189e6.jpg", // 替换为实际照片URL
+                caption: "每一天醒来，第一个想到的人就是你"
+            },
+            {
+                url: "https://pic1.imgdb.cn/item/68b17ce158cb8da5c86189e9.jpg", // 替换为实际照片URL
+                caption: "你的名字，是我读过最短的情诗"
+            },
+            {
+                url: "https://pic1.imgdb.cn/item/68b17f1258cb8da5c8618b2c.jpg", // 替换为实际照片URL
+                caption: "我喜欢你，像风走了八千里，不问归期"
+            },
+            {
+                url: "https://pic1.imgdb.cn/item/68b1801358cb8da5c8618b6f.jpg", // 替换为实际照片URL
+                caption: "你是我的今天和所有的明天"
+            },
+            {
+                url: "https://pic1.imgdb.cn/item/68b1803e58cb8da5c8618b7e.jpg", // 替换为实际照片URL
+                caption: "对于世界，你可能只是一个人，但对于我，你却是整个世界"
+            },
+            {
+                url: "https://pic1.imgdb.cn/item/68b1806958cb8da5c8618b84.jpg", // 替换为实际照片URL
+                caption: "我想和你一起慢慢变老，直到老得哪儿也去不了，我依然会把你当成手心里的宝"
+            },
+            {
+                url: "https://pic1.imgdb.cn/item/68b1806c58cb8da5c8618b85.jpg", // 替换为实际照片URL
+                caption: "自从遇见你，我的人生便只剩下了四季：春夏秋冬和你"
+            },
+            {
+                url: "https://pic1.imgdb.cn/item/68b184d058cb8da5c8618d19.png", // 替换为实际照片URL
+                caption: "领红包"
+            }
         ];
         
         // 情话数据
@@ -498,7 +530,7 @@
         let currentSlide = 0;
         let autoPlayInterval;
         let isAutoPlay = true;
-        let intervalTime = 5000; // 默认4秒
+        let intervalTime = 5000; // 默认5秒
         let currentMusicIndex = 0;
         let isMusicPlaying = false;
         
